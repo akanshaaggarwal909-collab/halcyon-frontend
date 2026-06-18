@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Halcyon Vogue</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="config.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#fff9f4;overflow-x:hidden;font-family:'DM Sans',sans-serif;}
+
+nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(255,249,244,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #f0d8c8;}
+.nav-logo{display:flex;flex-direction:column;line-height:1;cursor:pointer;}
+.nav-logo .c{font-family:'Great Vibes',cursive;font-size:1.5rem;color:#c0392b;}
+.nav-logo .b{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.2em;color:#1a1a1a;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#666;text-decoration:none;cursor:pointer;transition:color 0.2s;}
+.nav-links a:hover{color:#c0392b;}
+.nav-right{display:flex;gap:0.8rem;align-items:center;}
+.nav-join{padding:0.5rem 1.4rem;background:#c0392b;color:#fff;border:none;border-radius:2px;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.nav-user{font-size:0.78rem;color:#c0392b;font-weight:500;}
+
+.hero{width:100%;height:100vh;position:relative;overflow:hidden;}
+.beach-bg{position:absolute;inset:0;z-index:0;}
+.beach-bg video{width:100%;height:100%;object-fit:cover;}
+.red-banner{position:absolute;top:0;left:0;right:0;z-index:2;width:100%;pointer-events:none;}
+.red-banner svg{display:block;width:100%;height:auto;}
+.logo-wrap{position:absolute;z-index:3;width:100%;top:26%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;}
+.logo-cursive{font-family:'Great Vibes',cursive;font-size:clamp(3rem,7vw,5.5rem);color:#fff;line-height:1;text-shadow:0 3px 18px rgba(0,0,0,0.15);}
+.logo-bold{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,4rem);letter-spacing:0.35em;color:#fff;line-height:1;}
+.hero-btns{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:1rem;}
+.btn-r{padding:0.8rem 2rem;background:#c0392b;color:#fff;border:none;border-radius:2px;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.btn-w{padding:0.8rem 2rem;background:rgba(255,255,255,0.92);color:#c0392b;border:none;border-radius:2px;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+
+.sec-label{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:#c0392b;margin-bottom:0.5rem;}
+.sec-heading{font-family:'Great Vibes',cursive;font-size:clamp(2rem,5vw,3.2rem);color:#1a1a1a;margin-bottom:0.4rem;}
+.sec-sub{font-size:0.88rem;color:#999;margin-bottom:2.5rem;}
+
+.digi-section{background:linear-gradient(135deg,#fff9f4,#fff0e0);padding:5rem 2rem;text-align:center;}
+.tags-filter{display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;}
+.tag-btn{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 1rem;border:1px solid #e8d5c0;border-radius:2px;cursor:pointer;background:transparent;color:#999;transition:all 0.2s;}
+.tag-btn.active,.tag-btn:hover{border-color:#c0392b;color:#c0392b;}
+.digi-track{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;}
+.digi-pic{width:175px;background:#fff;padding:10px 10px 30px;box-shadow:3px 4px 18px rgba(0,0,0,0.13);position:relative;cursor:pointer;animation:wiggle 4s ease-in-out infinite;}
+.digi-pic:nth-child(2){animation-delay:.7s;animation-duration:3.6s;}
+.digi-pic:nth-child(3){animation-delay:1.4s;animation-duration:4.4s;}
+.digi-pic:nth-child(4){animation-delay:.3s;animation-duration:3.9s;}
+@keyframes wiggle{0%,100%{transform:rotate(-2.5deg);}50%{transform:rotate(2.5deg);}}
+.digi-pic img{width:100%;height:195px;object-fit:cover;display:block;}
+.digi-cap{font-size:0.68rem;color:#999;text-align:center;margin-top:5px;}
+.stk{position:absolute;font-size:1.5rem;}
+.tl{top:-13px;left:-9px;transform:rotate(-15deg);}
+.tr{top:-11px;right:-9px;transform:rotate(10deg);}
+.bl{bottom:7px;left:-11px;transform:rotate(5deg);}
+.br{bottom:7px;right:-9px;transform:rotate(-8deg);}
+.upload-btn{margin-top:2rem;padding:0.75rem 2rem;background:#c0392b;color:#fff;border:none;border-radius:2px;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+
+.blogs-section{background:#c0392b;padding:6rem 2.5rem;color:#fff;}
+.blogs-inner{max-width:960px;margin:0 auto;}
+.blogs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:2.5rem;}
+.blog-card{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;cursor:pointer;transition:transform 0.25s;}
+.blog-card:hover{transform:translateY(-4px);}
+.blog-card img{width:100%;height:155px;object-fit:cover;opacity:0.85;}
+.blog-body{padding:1.1rem;}
+.blog-tag-label{font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5c518;margin-bottom:0.4rem;}
+.blog-title{font-size:0.95rem;font-weight:500;color:#fff;line-height:1.4;margin-bottom:0.3rem;}
+.blog-author{font-size:0.72rem;color:rgba(255,255,255,0.5);}
+
+.lookbooks-section{background:#fff9f4;padding:6rem 2.5rem;text-align:center;}
+.lb-inner{max-width:1000px;margin:0 auto;}
+.scrapbooks{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;margin-top:2.5rem;}
+.scrapbook{width:210px;cursor:pointer;position:relative;transition:transform 0.3s;}
+.scrapbook:hover{transform:scale(1.05) rotate(1deg);}
+.scrapbook-cover{background:#fff;border:1px solid #e8d5c0;border-radius:4px;padding:12px;box-shadow:4px 6px 20px rgba(0,0,0,0.1);position:relative;}
+.scrapbook-cover img{width:100%;height:165px;object-fit:cover;border-radius:2px;}
+.spine{position:absolute;left:-9px;top:4px;bottom:4px;width:9px;background:#d4a88a;border-radius:2px 0 0 2px;}
+.sb-title{font-family:'Great Vibes',cursive;font-size:1.1rem;color:#c0392b;text-align:center;margin-top:0.5rem;}
+.sb-user{font-size:0.68rem;color:#bbb;text-align:center;}
+.sb-stk{position:absolute;font-size:1.3rem;}
+
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.book{width:560px;height:380px;position:relative;}
+.book-pages{width:100%;height:100%;display:flex;}
+.page{flex:1;background:#fffdf9;border:0.5px solid #e0cbb5;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.page:first-child{border-right:2px solid #d4a88a;border-radius:4px 0 0 4px;}
+.page:last-child{border-radius:0 4px 4px 0;}
+.page img{width:100%;height:100%;object-fit:cover;}
+.page-cap{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-family:'Great Vibes',cursive;font-size:1rem;color:#c0392b;}
+.close-btn{position:absolute;top:-13px;right:-13px;width:30px;height:30px;background:#c0392b;border:none;border-radius:50%;color:#fff;font-size:0.9rem;cursor:pointer;z-index:10;}
+
+.mood-section{background:linear-gradient(160deg,#fff9f4,#ffe8d6);padding:6rem 2.5rem;text-align:center;}
+.mood-inner{max-width:1000px;margin:0 auto;}
+.canvases{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;margin-top:2.5rem;}
+.canvas-frame{background:#fff;border:12px solid #e8d0b0;border-radius:4px;box-shadow:6px 8px 24px rgba(0,0,0,0.1);padding:6px;width:270px;cursor:pointer;transition:transform 0.3s;}
+.canvas-frame:hover{transform:translateY(-6px) rotate(-1deg);}
+.canvas-inner{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;height:190px;}
+.canvas-inner img{width:100%;height:100%;object-fit:cover;}
+.canvas-inner img:first-child{grid-row:1/3;}
+.canvas-label{font-family:'Great Vibes',cursive;font-size:1rem;color:#c0392b;text-align:center;margin-top:5px;}
+
+.closing{background:#c0392b;padding:7rem 2.5rem;text-align:center;position:relative;overflow:hidden;}
+.closing-deco{position:absolute;font-size:5rem;opacity:0.07;}
+.closing h2{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,6vw,4.5rem);color:#fff;margin-bottom:1rem;line-height:1.1;}
+.closing p{font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.8;max-width:500px;margin:0 auto 2.5rem;font-style:italic;}
+.closing-btn{padding:1rem 3rem;background:#fff;color:#c0392b;border:none;border-radius:2px;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-weight:500;}
+
+footer{background:#1a0a08;color:rgba(255,255,255,0.3);padding:1.8rem 2.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;}
+footer a{color:rgba(255,255,255,0.25);text-decoration:none;margin-left:1.5rem;}
+
+.auth-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;align-items:center;justify-content:center;}
+.auth-modal.open{display:flex;}
+.auth-box{background:#fff;border-radius:6px;padding:2.5rem;width:360px;position:relative;}
+.auth-box h3{font-family:'Great Vibes',cursive;font-size:2rem;color:#c0392b;margin-bottom:1.5rem;text-align:center;}
+.auth-box input{width:100%;padding:0.75rem 1rem;border:1px solid #e8d5c0;border-radius:2px;margin-bottom:1rem;font-size:0.88rem;font-family:'DM Sans',sans-serif;}
+.auth-submit{width:100%;padding:0.85rem;background:#c0392b;color:#fff;border:none;border-radius:2px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-bottom:1rem;}
+.auth-switch{font-size:0.78rem;color:#999;text-align:center;cursor:pointer;}
+.auth-switch span{color:#c0392b;text-decoration:underline;}
+.auth-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:#999;}
+.auth-error{font-size:0.78rem;color:#c0392b;margin-bottom:0.8rem;text-align:center;min-height:1rem;}
+
+.post-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;align-items:center;justify-content:center;}
+.post-modal.open{display:flex;}
+.post-box{background:#fff;border-radius:6px;padding:2rem;width:420px;position:relative;max-height:90vh;overflow-y:auto;}
+.post-box h3{font-family:'Great Vibes',cursive;font-size:1.8rem;color:#c0392b;margin-bottom:1.2rem;}
+.post-box input,.post-box select,.post-box textarea{width:100%;padding:0.7rem 1rem;border:1px solid #e8d5c0;border-radius:2px;margin-bottom:1rem;font-size:0.85rem;font-family:'DM Sans',sans-serif;}
+.post-box textarea{height:100px;resize:vertical;}
+.post-submit{padding:0.8rem 2rem;background:#c0392b;color:#fff;border:none;border-radius:2px;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.post-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:#999;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.empty-state{color:#ccc;font-style:italic;padding:2rem;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span class="c">Halcyon</span><span class="b">Vogue</span></div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('digi').scrollIntoView({behavior:'smooth'})">Feed</a>
+    <a onclick="document.getElementById('blogs').scrollIntoView({behavior:'smooth'})">Blogs</a>
+    <a onclick="document.getElementById('lookbooks').scrollIntoView({behavior:'smooth'})">Lookbooks</a>
+    <a onclick="document.getElementById('mood').scrollIntoView({behavior:'smooth'})">Moodboards</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="navUser"></span>
+    <button class="nav-join" id="navBtn" onclick="openAuth()">Join Us</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="beach-bg">
+    <video autoplay muted loop playsinline>
+      <source src="beach.mp4" type="video/mp4"/>
+    </video>
+  </div>
+  <div class="red-banner">
+    <svg viewBox="0 0 1440 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,0 L1440,0 L1440,300 Q720,180 0,300 Z" fill="#c0392b"/>
+      <circle cx="90" cy="42" r="22" fill="#f5c518"/><circle cx="295" cy="42" r="22" fill="#f5c518"/><circle cx="500" cy="42" r="22" fill="#f5c518"/><circle cx="705" cy="42" r="22" fill="#f5c518"/><circle cx="910" cy="42" r="22" fill="#f5c518"/><circle cx="1115" cy="42" r="22" fill="#f5c518"/><circle cx="1320" cy="42" r="22" fill="#f5c518"/>
+      <circle cx="192" cy="105" r="22" fill="#f5c518"/><circle cx="397" cy="105" r="22" fill="#f5c518"/><circle cx="602" cy="105" r="22" fill="#f5c518"/><circle cx="807" cy="105" r="22" fill="#f5c518"/><circle cx="1012" cy="105" r="22" fill="#f5c518"/><circle cx="1217" cy="105" r="22" fill="#f5c518"/>
+      <circle cx="90" cy="168" r="22" fill="#f5c518"/><circle cx="295" cy="168" r="22" fill="#f5c518"/><circle cx="500" cy="168" r="22" fill="#f5c518"/><circle cx="705" cy="168" r="22" fill="#f5c518"/><circle cx="910" cy="168" r="22" fill="#f5c518"/><circle cx="1115" cy="168" r="22" fill="#f5c518"/><circle cx="1320" cy="168" r="22" fill="#f5c518"/>
+      <circle cx="192" cy="230" r="22" fill="#f5c518"/><circle cx="397" cy="225" r="22" fill="#f5c518"/><circle cx="602" cy="220" r="22" fill="#f5c518"/><circle cx="807" cy="218" r="22" fill="#f5c518"/><circle cx="1012" cy="220" r="22" fill="#f5c518"/><circle cx="1217" cy="225" r="22" fill="#f5c518"/><circle cx="1370" cy="230" r="22" fill="#f5c518"/>
+    </svg>
+  </div>
+  <div class="logo-wrap">
+    <span class="logo-cursive">Halcyon</span>
+    <span class="logo-bold">VOGUE</span>
+  </div>
+  <div class="hero-btns">
+    <button class="btn-r" onclick="document.getElementById('digi').scrollIntoView({behavior:'smooth'})">Start Exploring</button>
+    <button class="btn-w" onclick="openPostModal('lookbook')">Create a Lookbook</button>
+  </div>
+</div>
+
+<!-- FEED -->
+<div class="digi-section" id="digi">
+  <p class="sec-label reveal">Fresh from the feed</p>
+  <h2 class="sec-heading reveal">Latest Looks</h2>
+  <p class="sec-sub reveal">Real people, real style 📸</p>
+  <div class="tags-filter reveal">
+    <button class="tag-btn active" onclick="filterFeed('all',this)">All</button>
+    <button class="tag-btn" onclick="filterFeed('cottagecore',this)">#Cottagecore</button>
+    <button class="tag-btn" onclick="filterFeed('darkacademia',this)">#Dark Academia</button>
+    <button class="tag-btn" onclick="filterFeed('y2k',this)">#Y2K</button>
+    <button class="tag-btn" onclick="filterFeed('quietluxury',this)">#Quiet Luxury</button>
+    <button class="tag-btn" onclick="filterFeed('avantgarde',this)">#Avant-Garde</button>
+  </div>
+  <div class="digi-track reveal" id="feedGrid">
+    <div class="digi-pic"><span class="stk tl">🍓</span><span class="stk tr">🎀</span><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=70" alt=""/><div class="digi-cap">summer bloom ✿</div><span class="stk bl">🌸</span></div>
+    <div class="digi-pic"><span class="stk tl">🎀</span><span class="stk tr">⭐</span><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=70" alt=""/><div class="digi-cap">structured chaos</div><span class="stk br">🦋</span></div>
+    <div class="digi-pic"><span class="stk tl">🌺</span><span class="stk tr">🍓</span><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&q=70" alt=""/><div class="digi-cap">beige dreams</div><span class="stk bl">🎀</span></div>
+    <div class="digi-pic"><span class="stk tl">⭐</span><span class="stk tr">🌸</span><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=70" alt=""/><div class="digi-cap">golden hour fits</div><span class="stk br">🍓</span></div>
+  </div>
+  <button class="upload-btn" onclick="openPostModal('post')">+ Share Your Look</button>
+</div>
+
+<!-- BLOGS -->
+<div class="blogs-section" id="blogs">
+  <div class="blogs-inner">
+    <p class="sec-label reveal" style="color:rgba(255,255,255,0.5)">From the community</p>
+    <h2 class="sec-heading reveal" style="color:#fff;">What the world is wearing</h2>
+    <p class="sec-sub reveal" style="color:rgba(255,255,255,0.6)">Stories, editorials & opinions from fashion minds everywhere.</p>
+    <div class="blogs-grid reveal" id="blogsGrid">
+      <div class="blog-card"><img src="https://images.unsplash.com/photo-1529139574466-a303027614a0?w=400&q=70" alt=""/><div class="blog-body"><div class="blog-tag-label">Trend Report</div><div class="blog-title">Why quiet luxury is the new loud statement</div><div class="blog-author">by Mirelle A. · 5 min read</div></div></div>
+      <div class="blog-card"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&q=70" alt=""/><div class="blog-body"><div class="blog-tag-label">Art & Culture</div><div class="blog-title">Dark academia — a mood, a movement, a wardrobe</div><div class="blog-author">by H. Rousseau · 7 min read</div></div></div>
+      <div class="blog-card"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=70" alt=""/><div class="blog-body"><div class="blog-tag-label">Opinion</div><div class="blog-title">Fashion without followers — why anonymity is freeing</div><div class="blog-author">by Kira T. · 4 min read</div></div></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <button class="btn-w" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="openPostModal('blog')">+ Write a Blog</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOOKBOOKS -->
+<div class="lookbooks-section" id="lookbooks">
+  <div class="lb-inner">
+    <p class="sec-label reveal">Community Lookbooks</p>
+    <h2 class="sec-heading reveal">Flip through their worlds</h2>
+    <p class="sec-sub reveal">Each lookbook is a handcrafted visual story. Click one to open it 📖</p>
+    <div class="scrapbooks reveal" id="lookbooksGrid">
+      <div class="scrapbook" onclick="openBook('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500','https://images.unsplash.com/photo-1529139574466-a303027614a0?w=500','Autumn Soft','by Mirelle A.')">
+        <div class="scrapbook-cover"><div class="spine"></div><span class="sb-stk" style="top:-12px;right:-8px;">🍓</span><span class="sb-stk" style="bottom:-10px;left:-10px;">🎀</span><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&q=70" alt=""/></div>
+        <div class="sb-title">Autumn Soft</div><div class="sb-user">by Mirelle A.</div>
+      </div>
+      <div class="scrapbook" onclick="openBook('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500','Neon Noir','by Studio Kira')">
+        <div class="scrapbook-cover"><div class="spine"></div><span class="sb-stk" style="top:-14px;left:-8px;">🌸</span><span class="sb-stk" style="bottom:-8px;right:-10px;">⭐</span><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=70" alt=""/></div>
+        <div class="sb-title">Neon Noir</div><div class="sb-user">by Studio Kira</div>
+      </div>
+      <div class="scrapbook" onclick="openBook('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500','https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500','Bloom Days','by Elara M.')">
+        <div class="scrapbook-cover"><div class="spine"></div><span class="sb-stk" style="top:-12px;right:-10px;">🦋</span><span class="sb-stk" style="bottom:-10px;left:-8px;">🍓</span><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=70" alt=""/></div>
+        <div class="sb-title">Bloom Days</div><div class="sb-user">by Elara M.</div>
+      </div>
+    </div>
+    <button class="upload-btn" onclick="openPostModal('lookbook')">+ Create Lookbook</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="bookModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="book">
+    <button class="close-btn" onclick="document.getElementById('bookModal').classList.remove('open')">✕</button>
+    <div class="book-pages">
+      <div class="page"><img id="bL" src="" alt=""/><div class="page-cap" id="cL"></div></div>
+      <div class="page"><img id="bR" src="" alt=""/><div class="page-cap" id="cR"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MOODBOARDS -->
+<div class="mood-section" id="mood">
+  <div class="mood-inner">
+    <p class="sec-label reveal">Moodboards</p>
+    <h2 class="sec-heading reveal">Visions on canvas</h2>
+    <p class="sec-sub reveal">Every aesthetic has a palette. What's yours? 🎨</p>
+    <div class="canvases reveal">
+      <div class="canvas-frame"><div class="canvas-inner"><img src="https://images.unsplash.com/photo-1529139574466-a303027614a0?w=200&q=70" alt=""/><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=200&q=70" alt=""/><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&q=70" alt=""/></div><div class="canvas-label">Quiet Luxury</div></div>
+      <div class="canvas-frame"><div class="canvas-inner"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=200&q=70" alt=""/><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200&q=70" alt=""/><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=200&q=70" alt=""/></div><div class="canvas-label">Dark Academia</div></div>
+      <div class="canvas-frame"><div class="canvas-inner"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200&q=70" alt=""/><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=200&q=70" alt=""/><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=70" alt=""/></div><div class="canvas-label">Bloom & Botanical</div></div>
+    </div>
+    <button class="upload-btn" onclick="openPostModal('moodboard')">+ Create Moodboard</button>
+  </div>
+</div>
+
+<div class="closing">
+  <div class="closing-deco" style="top:1rem;left:2rem;">🌸</div>
+  <div class="closing-deco" style="bottom:1rem;right:2rem;">🎀</div>
+  <p class="sec-label" style="color:rgba(255,255,255,0.5)">Join the atelier</p>
+  <h2>Art lives everywhere.<br>Especially in you.</h2>
+  <p>Fashion is not something that exists in dresses only. It is in the sky, in the street — it has to do with ideas, the way we live, what is happening. Express yourself. No followers needed.</p>
+  <button class="closing-btn" onclick="openAuth()">Start Creating — It's Free</button>
+</div>
+
+<footer>
+  <span>Halcyon Vogue © 2025 — A space for creative souls</span>
+  <div><a href="#">About</a><a href="#">Manifesto</a><a href="#">Blogs</a><a href="#">Lookbooks</a><a href="#">Contact</a></div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="auth-box">
+    <button class="auth-close" onclick="document.getElementById('authModal').classList.remove('open')">✕</button>
+    <h3 id="authTitle">Join Us</h3>
+    <div class="auth-error" id="authError"></div>
+    <div id="registerFields"><input type="text" id="regUsername" placeholder="Username"/></div>
+    <input type="email" id="authEmail" placeholder="Email"/>
+    <input type="password" id="authPassword" placeholder="Password"/>
+    <button class="auth-submit" id="authSubmit" onclick="submitAuth()">Create Account</button>
+    <div class="auth-switch" id="authSwitch" onclick="toggleAuth()">Already have an account? <span>Sign in</span></div>
+  </div>
+</div>
+
+<!-- POST MODAL -->
+<div class="post-modal" id="postModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="post-box">
+    <button class="post-close" onclick="document.getElementById('postModal').classList.remove('open')">✕</button>
+    <h3 id="postModalTitle">Share Your Look</h3>
+    <div id="postModalContent"></div>
+  </div>
+</div>
+
+<script>
+let currentUser = null;
+let isLogin = false;
+
+// ── API calls always go to your Render backend ────────────────────────────
+async function api(path, options = {}) {
+  const res = await fetch(API_BASE + path, {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json', ...options.headers },
+    ...options
+  });
+  return res.json();
+}
+async function apiForm(path, formData) {
+  const res = await fetch(API_BASE + path, { method: 'POST', credentials: 'include', body: formData });
+  return res.json();
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+function openAuth() { document.getElementById('authModal').classList.add('open'); }
+function toggleAuth() {
+  isLogin = !isLogin;
+  document.getElementById('authTitle').textContent = isLogin ? 'Welcome Back' : 'Join Us';
+  document.getElementById('authSubmit').textContent = isLogin ? 'Sign In' : 'Create Account';
+  document.getElementById('authSwitch').innerHTML = isLogin ? 'New here? <span>Create account</span>' : 'Already have an account? <span>Sign in</span>';
+  document.getElementById('registerFields').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('authError').textContent = '';
+}
+async function submitAuth() {
+  const email = document.getElementById('authEmail').value;
+  const password = document.getElementById('authPassword').value;
+  const errEl = document.getElementById('authError');
+  errEl.textContent = '';
+  try {
+    let body = { email, password };
+    let url = isLogin ? '/api/login' : '/api/register';
+    if (!isLogin) body.username = document.getElementById('regUsername').value;
+    const d = await api(url, { method: 'POST', body: JSON.stringify(body) });
+    if (d.error) { errEl.textContent = d.error; return; }
+    currentUser = d.user;
+    updateNavUser();
+    document.getElementById('authModal').classList.remove('open');
+    loadFeed(); loadBlogs(); loadLookbooks();
+  } catch (e) { errEl.textContent = 'Something went wrong. Try again.'; }
+}
+async function logout() {
+  await api('/api/logout', { method: 'POST' });
+  currentUser = null;
+  updateNavUser();
+}
+function updateNavUser() {
+  if (currentUser) {
+    document.getElementById('navUser').textContent = 'Hi, ' + currentUser.username + '!';
+    document.getElementById('navBtn').textContent = 'Log Out';
+    document.getElementById('navBtn').onclick = logout;
+  } else {
+    document.getElementById('navUser').textContent = '';
+    document.getElementById('navBtn').textContent = 'Join Us';
+    document.getElementById('navBtn').onclick = openAuth;
+  }
+}
+async function checkSession() {
+  const d = await api('/api/me');
+  if (d.user) { currentUser = d.user; updateNavUser(); }
+}
+
+// ── Load feed from backend ────────────────────────────────────────────────
+async function loadFeed(aesthetic = 'all') {
+  try {
+    const d = await api('/api/posts?aesthetic=' + aesthetic);
+    if (!d.posts || d.posts.length === 0) return;
+    const grid = document.getElementById('feedGrid');
+    const stickers = ['🍓','🎀','🌸','🦋','⭐','🌺'];
+    const newPosts = d.posts.map((p, i) => `
+      <div class="digi-pic" style="transform:rotate(${(i%2===0?-1:1)*2}deg)">
+        <span class="stk tl">${stickers[i%stickers.length]}</span>
+        <span class="stk tr">${stickers[(i+1)%stickers.length]}</span>
+        <img src="${API_BASE + p.image}" alt=""/>
+        <div class="digi-cap">${p.caption}</div>
+        <span class="stk bl">${stickers[(i+2)%stickers.length]}</span>
+      </div>`).join('');
+    grid.insertAdjacentHTML('afterbegin', newPosts);
+  } catch (e) { console.log('Feed load error', e); }
+}
+
+async function loadBlogs() {
+  try {
+    const d = await api('/api/blogs');
+    if (!d.blogs || d.blogs.length === 0) return;
+    const grid = document.getElementById('blogsGrid');
+    const newBlogs = d.blogs.map(b => `
+      <div class="blog-card">
+        ${b.coverImage ? `<img src="${API_BASE + b.coverImage}" alt=""/>` : `<img src="https://images.unsplash.com/photo-1529139574466-a303027614a0?w=400&q=70" alt=""/>`}
+        <div class="blog-body">
+          <div class="blog-tag-label">${b.tag}</div>
+          <div class="blog-title">${b.title}</div>
+          <div class="blog-author">by ${b.authorName}</div>
+        </div>
+      </div>`).join('');
+    grid.insertAdjacentHTML('afterbegin', newBlogs);
+  } catch (e) { console.log('Blogs load error', e); }
+}
+
+async function loadLookbooks() {
+  try {
+    const d = await api('/api/lookbooks');
+    if (!d.lookbooks || d.lookbooks.length === 0) return;
+    const grid = document.getElementById('lookbooksGrid');
+    const stickers = ['🍓','🎀','🌸','🦋'];
+    const newLBs = d.lookbooks.map((lb, i) => `
+      <div class="scrapbook" onclick="openBook('${API_BASE + lb.images[0]}','${API_BASE + (lb.images[1]||lb.images[0])}','${lb.title}','by ${lb.authorName}')">
+        <div class="scrapbook-cover">
+          <div class="spine"></div>
+          <span class="sb-stk" style="top:-12px;right:-8px;">${stickers[i%stickers.length]}</span>
+          <img src="${API_BASE + lb.coverImage}" alt=""/>
+        </div>
+        <div class="sb-title">${lb.title}</div>
+        <div class="sb-user">by ${lb.authorName}</div>
+      </div>`).join('');
+    grid.insertAdjacentHTML('afterbegin', newLBs);
+  } catch (e) { console.log('Lookbooks load error', e); }
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────
+function filterFeed(aesthetic, btn) {
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadFeed(aesthetic);
+}
+
+// ── Book modal ────────────────────────────────────────────────────────────
+function openBook(imgL, imgR, titleL, titleR) {
+  document.getElementById('bL').src = imgL;
+  document.getElementById('bR').src = imgR;
+  document.getElementById('cL').textContent = titleL;
+  document.getElementById('cR').textContent = titleR;
+  document.getElementById('bookModal').classList.add('open');
+}
+
+// ── Post modal ────────────────────────────────────────────────────────────
+function openPostModal(type) {
+  if (!currentUser) { openAuth(); return; }
+  const title = document.getElementById('postModalTitle');
+  const content = document.getElementById('postModalContent');
+  const templates = {
+    post: { t: 'Share Your Look 📸', html: `<input type="file" id="pFile" accept="image/*" style="margin-bottom:1rem;width:100%;"/><input type="text" id="pCaption" placeholder="Caption e.g. summer bloom ✿"/><select id="pAesthetic"><option value="general">General</option><option value="cottagecore">Cottagecore</option><option value="darkacademia">Dark Academia</option><option value="y2k">Y2K</option><option value="quietluxury">Quiet Luxury</option><option value="avantgarde">Avant-Garde</option></select><button class="post-submit" onclick="submitPost('post')">Upload Look</button>` },
+    blog: { t: 'Write a Blog ✍️', html: `<input type="file" id="pCover" accept="image/*" style="margin-bottom:1rem;width:100%;"/><input type="text" id="pTitle" placeholder="Blog title"/><input type="text" id="pTag" placeholder="Tag e.g. Trend Report"/><textarea id="pContent" placeholder="Write your blog post..."></textarea><button class="post-submit" onclick="submitPost('blog')">Publish Blog</button>` },
+    lookbook: { t: 'Create Lookbook 📖', html: `<input type="text" id="pTitle" placeholder="Lookbook title"/><select id="pAesthetic"><option value="general">General</option><option value="cottagecore">Cottagecore</option><option value="darkacademia">Dark Academia</option><option value="quietluxury">Quiet Luxury</option></select><input type="file" id="pFiles" accept="image/*" multiple style="margin-bottom:1rem;width:100%;"/><button class="post-submit" onclick="submitPost('lookbook')">Create Lookbook</button>` },
+    moodboard: { t: 'Create Moodboard 🎨', html: `<input type="text" id="pTitle" placeholder="Moodboard title"/><input type="file" id="pFiles" accept="image/*" multiple style="margin-bottom:1rem;width:100%;"/><button class="post-submit" onclick="submitPost('moodboard')">Create Moodboard</button>` }
+  };
+  title.textContent = templates[type].t;
+  content.innerHTML = templates[type].html;
+  document.getElementById('postModal').classList.add('open');
+}
+
+async function submitPost(type) {
+  const fd = new FormData();
+  const urls = { post: '/api/posts', blog: '/api/blogs', lookbook: '/api/lookbooks', moodboard: '/api/moodboards' };
+  try {
+    if (type === 'post') {
+      fd.append('image', document.getElementById('pFile').files[0]);
+      fd.append('caption', document.getElementById('pCaption').value);
+      fd.append('aesthetic', document.getElementById('pAesthetic').value);
+    } else if (type === 'blog') {
+      if (document.getElementById('pCover').files[0]) fd.append('coverImage', document.getElementById('pCover').files[0]);
+      fd.append('title', document.getElementById('pTitle').value);
+      fd.append('tag', document.getElementById('pTag').value);
+      fd.append('content', document.getElementById('pContent').value);
+    } else {
+      fd.append('title', document.getElementById('pTitle').value);
+      if (document.getElementById('pAesthetic')) fd.append('aesthetic', document.getElementById('pAesthetic').value);
+      Array.from(document.getElementById('pFiles').files).forEach(f => fd.append('images', f));
+    }
+    const d = await apiForm(urls[type], fd);
+    if (d.error) { alert(d.error); return; }
+    document.getElementById('postModal').classList.remove('open');
+    alert('Posted successfully! 🎉');
+    if (type === 'post') loadFeed();
+    else if (type === 'blog') loadBlogs();
+    else if (type === 'lookbook') loadLookbooks();
+  } catch (e) { alert('Something went wrong.'); }
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+// ── Init ──────────────────────────────────────────────────────────────────
+checkSession();
+loadFeed();
+loadBlogs();
+loadLookbooks();
+</script>
+</body>
+</html>
